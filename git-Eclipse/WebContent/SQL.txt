@@ -1,41 +1,72 @@
-1.建立下面三個表格
-2.依下面需求建立假資料
-	2.1建立3筆 customer資料
-	2.2建立4筆 orders資料，其中兩筆資料對到一個customer
-	2.3建立6筆 product資料，資料分配2:2:1:1 ，到orders資料
-	
-3.進行查詢
-4.子查詢
-	4.1select子查詢
-	4.2from子查詢
-5.inner join
-6.left join
+--DUAL
+select sysdate from dual
 
---建立customer表格
-create table CUSTOMER (
-    C_ID varchar2(10) not null constraint customer_pk primary key,
-    C_NAME varchar2(10) not null,
-    SEX number not null,
-    PHONENUM varchar2(4000),
-    CREATEDATE date not null,
-    MODIFYDATE date not null
-);
+--DATE 轉 CHAR
+select 
+    to_char(hiredate,'yyyy-mm-dd')
+from 
+    SCOTT.EMP
+
+--CHAR轉DATE 
+select 
+    to_date('1993-01-20','yyyy-mm-dd')
+from
+    dual
+
+--COUNT GROUP BY 
+select 
+    count(JOB) , JOB
+from 
+    SCOTT.EMP
+GROUP BY JOB
+
+--子查詢
+select
+    *
+from
+    (select * FROM SCOTT.EMP WHERE SAL >= 3000) res
+WHERE
+ RES.DEPTNO = '20'
+
+--子查詢(SELECT)
+SELECT
+    EMP.* , 
+    (SELECT DEPT.DNAME FROM SCOTT.DEPT DEPT WHERE EMP.DEPTNO = DEPT.DEPTNO ) AS DEPTNAME
+FROM
+    SCOTT.EMP EMP
+WHERE
+    DEPTNO in ('10','20')
+    AND
+    --EXISTS
+    EXISTS (
+        SELECT * FROM SCOTT.DEPT DEPT WHERE DEPT.DEPTNO = EMP.DEPTNO AND DEPT.LOC = 'DALLAS'
+    )
+    
+     
+--DECODE
+select 
+    EMPNO,
+    ENAME,
+    decode(JOB,'PRESIDENT','頭','MANAGER','經理','SALESMAN','業務','OTHER'),
+    JOB AS JOB , 
+    MGR
+from SCOTT.EMP
+
+--CASE
+SELECT
+    CASE 'AAA'
+    WHEN 'AAA' THEN 'Y'
+    ELSE 'N'
+    END
+FROM DUAL
+
+--SUM
+SELECT
+    SUM(SAL)
+FROM 
+    SCOTT.EMP
 
 
---建立order表格
-create table ORDERS (
-    O_ID varchar2(10) not null constraint order_pk primary key,
-    C_ID varchar2(10) not null,
-    PRICE number,
-    CREATEDATE date,
-    MODIFYDATE date
-);
 
---建立PRODUCTS表格
-create table PRODUCTS (
-    P_ID varchar2(10) not null constraint products_pk primary key,
-    O_ID varchar2(10) not null,
-    P_NAME varchar2(20) not null,
-    CREATEDATE date not null,
-    MODIFYDATE date not null
-);
+    
+    
