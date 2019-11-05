@@ -1,15 +1,26 @@
+1.建立下面三個表格
+2.依下面需求建立假資料
+	2.1建立3筆 customer資料
+	2.2建立4筆 orders資料，其中兩筆資料對到一個customer
+	2.3建立6筆 product資料，資料分配2:2:1:1 ，到orders資料
+	
+3.進行查詢
+4.子查詢
+	4.1select子查詢
+	4.2from子查詢
+5.inner join
+6.left join
+
 --建立customer表格
 create table CUSTOMER (
-    ID varchar2(4000) not null constraint customer_pk primary key,
-    NAME varchar2(4000) not null,
+    C_ID varchar2(10) not null constraint customer_pk primary key,
+    C_NAME varchar2(10) not null,
     SEX number not null,
     PHONENUM varchar2(4000),
     CREATEDATE date not null,
     MODIFYDATE date not null
 );
-/
 
-alter table CUSTOMER add constraint customer_id_uq unique (ID);
 
 --建立order表格
 create table ORDERS (
@@ -18,4 +29,13 @@ create table ORDERS (
     PRICE number,
     CREATEDATE date,
     MODIFYDATE date
+);
+
+--建立PRODUCTS表格
+create table PRODUCTS (
+    P_ID varchar2(10) not null constraint products_pk primary key,
+    O_ID varchar2(10) not null,
+    P_NAME varchar2(20) not null,
+    CREATEDATE date not null,
+    MODIFYDATE date not null
 );
