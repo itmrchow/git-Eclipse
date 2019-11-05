@@ -1,0 +1,21 @@
+--建立customer表格
+create table CUSTOMER (
+    ID varchar2(4000) not null constraint customer_pk primary key,
+    NAME varchar2(4000) not null,
+    SEX number not null,
+    PHONENUM varchar2(4000),
+    CREATEDATE date not null,
+    MODIFYDATE date not null
+);
+/
+
+alter table CUSTOMER add constraint customer_id_uq unique (ID);
+
+--建立order表格
+create table ORDERS (
+    O_ID varchar2(10) not null constraint order_pk primary key,
+    C_ID varchar2(10) not null,
+    PRICE number,
+    CREATEDATE date,
+    MODIFYDATE date
+);
